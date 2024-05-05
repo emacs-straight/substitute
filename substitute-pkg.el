@@ -1,0 +1,2 @@
+;; Generated package description from substitute.el  -*- no-byte-compile: t -*-
+(define-package "substitute" "0.2.1.0.20240117.30048" "Efficiently replace targets in the buffer or context" '((emacs "27.1")) :commit "f4996f4391157989d7779fafc961dada89cec40e" :authors '(("Protesilaos Stavrou" . "info@protesilaos.com")) :maintainer '("Protesilaos Stavrou" . "info@protesilaos.com") :url "https://github.com/protesilaos/substitute")
