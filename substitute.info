@@ -1,4 +1,4 @@
-This is docHE9BOT.info, produced by makeinfo version 6.8 from
+This is doc0wMHuL.info, produced by makeinfo version 6.8 from
 substitute.texi.
 
 Copyright (C) 2023 Free Software Foundation, Inc.
@@ -20,7 +20,7 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: docHE9BOT.info,  Node: Top,  Next: Overview,  Up: (dir)
+File: doc0wMHuL.info,  Node: Top,  Next: Overview,  Up: (dir)
 
 substitute: Efficiently replace targets in the buffer or context
 ****************************************************************
@@ -44,11 +44,11 @@ customization options for the Emacs package called ‘substitute’ (or
 pertinent to it.
 
    The documentation furnished herein corresponds to stable version
-0.2.0, released on 2023-07-01.  Any reference to a newer feature which
+0.3.0, released on 2024-05-20.  Any reference to a newer feature which
 does not yet form part of the latest tagged commit, is explicitly marked
 as such.
 
-   Current development target is 0.3.0-dev.
+   Current development target is 0.4.0-dev.
 
    • Package name (GNU ELPA): ‘substitute’
    • Official manual: <https://protesilaos.com/emacs/substitute>
@@ -88,7 +88,7 @@ Indices
 
 
 
-File: docHE9BOT.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
+File: doc0wMHuL.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
 
 1 Overview
 **********
@@ -156,8 +156,22 @@ discretion of the user.  By default, the hook is empty and no
 post-substitution action is performed (e.g.  the
 ‘substitute-report-operation’).
 
+   The command ‘substitute-prefix-map’ can be assigned to a key to make
+it work as a prefix.  This way, all Substitute commands are readily
+available.  For example:
+
+     (define-key global-map (kbd "C-c s") #'substitute-prefix-map)
+
+   After evaluating that, type ‘C-c s C-h’ to learn about all the key
+bindings.  To change those, use something like this:
+
+     (define-key substitute-prefix-map (kbd "b") #'substitute-target-in-buffer)
+     (define-key substitute-prefix-map (kbd "d") #'substitute-target-in-defun)
+     (define-key substitute-prefix-map (kbd "r") #'substitute-target-above-point)
+     (define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)
+
 
-File: docHE9BOT.info,  Node: Installation,  Next: Sample configuration,  Prev: Overview,  Up: Top
+File: doc0wMHuL.info,  Node: Installation,  Next: Sample configuration,  Prev: Overview,  Up: Top
 
 2 Installation
 **************
@@ -168,7 +182,7 @@ File: docHE9BOT.info,  Node: Installation,  Next: Sample configuration,  Prev: O
 * Manual installation::
 
 
-File: docHE9BOT.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
+File: doc0wMHuL.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
 
 2.1 GNU ELPA package
 ====================
@@ -187,7 +201,7 @@ archive.  Read:
 <https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>.
 
 
-File: docHE9BOT.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
+File: doc0wMHuL.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
 
 2.2 Manual installation
 =======================
@@ -214,7 +228,7 @@ following commands in a shell prompt:
    Everything is in place to set up the package.
 
 
-File: docHE9BOT.info,  Node: Sample configuration,  Next: Acknowledgements,  Prev: Installation,  Up: Top
+File: doc0wMHuL.info,  Node: Sample configuration,  Next: Acknowledgements,  Prev: Installation,  Up: Top
 
 3 Sample configuration
 **********************
@@ -227,23 +241,18 @@ File: docHE9BOT.info,  Node: Sample configuration,  Next: Acknowledgements,  Pre
 
      ;; Set this to t if you want to always treat the letter casing
      ;; literally.  Otherwise each command accepts a `C-u' prefix
-       ;; argument to do this on-demand.
+     ;; argument to do this on-demand.
      (setq substitute-fixed-letter-case t)
 
      ;; If you want a message reporting the matches that changed in the
      ;; given context.  We don't do it by default.
      (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
 
-     ;; We do not bind any keys.  This is just an idea.  The mnemonic is
-     ;; that M-# (or M-S-3) is close to M-% (or M-S-5).
-     (let ((map global-map))
-       (define-key map (kbd "M-# s") #'substitute-target-below-point)
-       (define-key map (kbd "M-# r") #'substitute-target-above-point)
-       (define-key map (kbd "M-# d") #'substitute-target-in-defun)
-       (define-key map (kbd "M-# b") #'substitute-target-in-buffer))
+     ;; Use C-c s as a prefix for all Substitute commands.
+     (define-key global-map (kbd "C-c s") #'substitute-prefix-map)
 
 
-File: docHE9BOT.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Sample configuration,  Up: Top
+File: doc0wMHuL.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Sample configuration,  Up: Top
 
 4 Acknowledgements
 ******************
@@ -261,7 +270,7 @@ Ideas and/or user feedback
      Tomasz Hołubowicz, ersi-dnd, revrari.
 
 
-File: docHE9BOT.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
+File: doc0wMHuL.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
 
 5 GNU Free Documentation License
 ********************************
@@ -743,7 +752,7 @@ software license, such as the GNU General Public License, to permit
 their use in free software.
 
 
-File: docHE9BOT.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
+File: doc0wMHuL.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
 
 6 Indices
 *********
@@ -755,7 +764,7 @@ File: docHE9BOT.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up
 * Concept index::
 
 
-File: docHE9BOT.info,  Node: Function index,  Next: Variable index,  Up: Indices
+File: doc0wMHuL.info,  Node: Function index,  Next: Variable index,  Up: Indices
 
 6.1 Function index
 ==================
@@ -764,6 +773,7 @@ File: docHE9BOT.info,  Node: Function index,  Next: Variable index,  Up: Indices
 * Menu:
 
 * ~substitute-target-to-beginning-of-buffer: Overview.         (line 44)
+* substitute-prefix-map:                 Overview.             (line 69)
 * substitute-report-operation:           Overview.             (line 59)
 * substitute-target-above-point:         Overview.             (line 44)
 * substitute-target-below-point:         Overview.             (line 40)
@@ -772,7 +782,7 @@ File: docHE9BOT.info,  Node: Function index,  Next: Variable index,  Up: Indices
 * substitute-target-to-end-of-buffer:    Overview.             (line 40)
 
 
-File: docHE9BOT.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
+File: doc0wMHuL.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
 
 6.2 Variable index
 ==================
@@ -785,7 +795,7 @@ File: docHE9BOT.info,  Node: Variable index,  Next: Concept index,  Prev: Functi
 * substitute-post-replace-functions:     Overview.             (line 59)
 
 
-File: docHE9BOT.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
+File: doc0wMHuL.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 6.3 Concept index
 =================
@@ -801,16 +811,16 @@ File: docHE9BOT.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 Tag Table:
 Node: Top863
 Node: Overview3106
-Node: Installation6510
-Node: GNU ELPA package6697
-Node: Manual installation7262
-Node: Sample configuration8047
-Node: Acknowledgements9234
-Node: GNU Free Documentation License9684
-Node: Indices35027
-Node: Function index35203
-Node: Variable index35859
-Node: Concept index36245
+Node: Installation7200
+Node: GNU ELPA package7387
+Node: Manual installation7952
+Node: Sample configuration8737
+Node: Acknowledgements9614
+Node: GNU Free Documentation License10064
+Node: Indices35407
+Node: Function index35583
+Node: Variable index36312
+Node: Concept index36698
 
 End Tag Table
 

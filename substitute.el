@@ -5,7 +5,7 @@
 ;; Author: Protesilaos Stavrou <info@protesilaos.com>
 ;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
 ;; URL: https://github.com/protesilaos/substitute
-;; Version: 0.2.1
+;; Version: 0.3.0
 ;; Package-Requires: ((emacs "27.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -344,6 +344,19 @@ Report COUNTth substitutions of TARGET with SUB in SCOPE."
            (propertize sub 'face 'success)
            count
            (propertize scope 'face 'warning)))
+
+(defvar substitute-prefix-map (make-sparse-keymap)
+  "Keymap with Substitute commands.
+Meant to be assigned to a prefix key, like this:
+
+    (define-key global-map (kbd \"C-c s\") \=#'substitute-prefix-map)")
+
+(define-prefix-command 'substitute-prefix-map)
+
+(define-key substitute-prefix-map (kbd "b") #'substitute-target-in-buffer)
+(define-key substitute-prefix-map (kbd "d") #'substitute-target-in-defun)
+(define-key substitute-prefix-map (kbd "r") #'substitute-target-above-point)
+(define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)
 
 (provide 'substitute)
 ;;; substitute.el ends here
