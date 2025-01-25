@@ -1,6 +1,6 @@
 ;;; substitute.el --- Efficiently replace targets in the buffer or context -*- lexical-binding: t -*-
 
-;; Copyright (C) 2023-2024  Free Software Foundation, Inc.
+;; Copyright (C) 2023-2025  Free Software Foundation, Inc.
 
 ;; Author: Protesilaos Stavrou <info@protesilaos.com>
 ;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
@@ -79,7 +79,7 @@ For a reference function, see `substitute-report-operation'."
 
 (defface substitute-match
   `((t :inherit ,(if-let* ((face 'lazy-highlight)
-                           (facep face))
+                           ((facep face)))
                      face
                    'secondary-selection)))
   "Face to highlight matches of the given target."
@@ -194,7 +194,8 @@ Pass to it the TARGET and SCOPE arguments."
 
 (defvar-local substitute--last-matches nil
   "Alist of the last matching substitution targets.
-Each entry is a list of the symbol and its buffer positions.")
+Each entry is a list of the form (STRING BEG END), where STRING is the
+text to be replaced, while BEG and END are buffer positions.")
 
 (defun substitute--collect-targets (target scope)
   "Store occurrences of TARGET in SCOPE in `substitute--last-matches'."
@@ -210,21 +211,16 @@ Each entry is a list of the symbol and its buffer positions.")
                 substitute--last-matches))))
     substitute--last-matches))
 
-(defun substitute--beg-end (beg end)
-  "Determine if BEG is smaller than END and return ordered list."
-  (if (< beg end)
-      (list beg end)
-    (list end beg)))
-
 (defun substitute--highlight-targets ()
   "Highlight `substitute--last-matches'."
   (when-let* ((targets substitute--last-matches))
     (save-excursion
       (save-restriction
-        (mapcar (lambda (target)
-                  (substitute--add-highlight (nth 1 target)
-                                             (nth 2 target)))
-                targets)))))
+        (mapcar
+         (lambda (target)
+           (pcase-let ((`(,_ ,beg ,end) target))
+             (substitute--add-highlight beg end)))
+         targets)))))
 
 (defun substitute--replace-targets (sub &optional scope fixed)
   "Replace `substitute--last-matches' target with SUB.
@@ -240,17 +236,16 @@ upcasing based on the target text.  See the documenation of
       (when (listp buffer-undo-list)
         (push (point) buffer-undo-list))
       (save-restriction
-        (mapcar (lambda (target)
-                  (let ((ps (substitute--beg-end (nth 1 target) (nth 2 target)))
-                        reverse)
-                    (when (eq scope 'above)
-                      (setq reverse t))
-                    (goto-char (if reverse (cadr ps) (car ps)))
-                    (funcall
-                     (if reverse 're-search-backward 're-search-forward)
-                     (car target))
-                    (replace-match sub (or fixed substitute-fixed-letter-case))))
-                targets)))))
+        (mapcar
+         (lambda (target)
+           (pcase-let* ((`(,string ,beg ,end) target)
+                        (`(,pos ,fn) (if (eq scope 'above)
+                                         (list (max beg end) 're-search-backward)
+                                       (list (min beg end) 're-search-forward))))
+             (goto-char pos)
+             (funcall fn string)
+             (replace-match sub (or fixed substitute-fixed-letter-case))))
+         targets)))))
 
 (defun substitute--operate (target sub &optional scope fixed)
   "Operate on TARGET with SUB in SCOPE.
