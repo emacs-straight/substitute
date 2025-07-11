@@ -1,4 +1,4 @@
-This is doc9KW7eE.info, produced by makeinfo version 6.8 from
+This is docSdZPex.info, produced by makeinfo version 6.8 from
 substitute.texi.
 
 Copyright (C) 2023-2025 Free Software Foundation, Inc.
@@ -20,7 +20,7 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: doc9KW7eE.info,  Node: Top,  Next: Overview,  Up: (dir)
+File: docSdZPex.info,  Node: Top,  Next: Overview,  Up: (dir)
 
 substitute: Efficiently replace targets in the buffer or context
 ****************************************************************
@@ -88,7 +88,7 @@ Indices
 
 
 
-File: doc9KW7eE.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
+File: docSdZPex.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
 
 1 Overview
 **********
@@ -171,7 +171,7 @@ bindings.  To change those, use something like this:
      (define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)
 
 
-File: doc9KW7eE.info,  Node: Installation,  Next: Sample configuration,  Prev: Overview,  Up: Top
+File: docSdZPex.info,  Node: Installation,  Next: Sample configuration,  Prev: Overview,  Up: Top
 
 2 Installation
 **************
@@ -182,7 +182,7 @@ File: doc9KW7eE.info,  Node: Installation,  Next: Sample configuration,  Prev: O
 * Manual installation::
 
 
-File: doc9KW7eE.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
+File: docSdZPex.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
 
 2.1 GNU ELPA package
 ====================
@@ -201,7 +201,7 @@ archive.  Read:
 <https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>.
 
 
-File: doc9KW7eE.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
+File: docSdZPex.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
 
 2.2 Manual installation
 =======================
@@ -228,7 +228,7 @@ following commands in a shell prompt:
    Everything is in place to set up the package.
 
 
-File: doc9KW7eE.info,  Node: Sample configuration,  Next: Acknowledgements,  Prev: Installation,  Up: Top
+File: docSdZPex.info,  Node: Sample configuration,  Next: Acknowledgements,  Prev: Installation,  Up: Top
 
 3 Sample configuration
 **********************
@@ -252,7 +252,7 @@ File: doc9KW7eE.info,  Node: Sample configuration,  Next: Acknowledgements,  Pre
      (define-key global-map (kbd "C-c s") #'substitute-prefix-map)
 
 
-File: doc9KW7eE.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Sample configuration,  Up: Top
+File: docSdZPex.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Sample configuration,  Up: Top
 
 4 Acknowledgements
 ******************
@@ -270,7 +270,7 @@ Ideas and/or user feedback
      Tomasz Hołubowicz, ersi-dnd, revrari.
 
 
-File: doc9KW7eE.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
+File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
 
 5 GNU Free Documentation License
 ********************************
@@ -752,7 +752,7 @@ software license, such as the GNU General Public License, to permit
 their use in free software.
 
 
-File: doc9KW7eE.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
+File: docSdZPex.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
 
 6 Indices
 *********
@@ -764,7 +764,7 @@ File: doc9KW7eE.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up
 * Concept index::
 
 
-File: doc9KW7eE.info,  Node: Function index,  Next: Variable index,  Up: Indices
+File: docSdZPex.info,  Node: Function index,  Next: Variable index,  Up: Indices
 
 6.1 Function index
 ==================
@@ -782,7 +782,7 @@ File: doc9KW7eE.info,  Node: Function index,  Next: Variable index,  Up: Indices
 * substitute-target-to-end-of-buffer:    Overview.             (line 40)
 
 
-File: doc9KW7eE.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
+File: docSdZPex.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
 
 6.2 Variable index
 ==================
@@ -795,7 +795,7 @@ File: doc9KW7eE.info,  Node: Variable index,  Next: Concept index,  Prev: Functi
 * substitute-post-replace-functions:     Overview.             (line 59)
 
 
-File: doc9KW7eE.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
+File: docSdZPex.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 6.3 Concept index
 =================
