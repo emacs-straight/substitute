@@ -5,7 +5,7 @@
 ;; Author: Protesilaos Stavrou <info@protesilaos.com>
 ;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
 ;; URL: https://github.com/protesilaos/substitute
-;; Version: 0.3.1
+;; Version: 0.4.0
 ;; Package-Requires: ((emacs "27.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -85,7 +85,7 @@ For a reference function, see `substitute-report-operation'."
   "Face to highlight matches of the given target."
   :group 'substitute)
 
-(defvar substitute--history '()
+(defvar substitute--history nil
   "Minibuffer history for substitution commands.")
 
 (defun substitute--scope-description (scope)
@@ -96,11 +96,19 @@ Possible meaningful values for SCOPE are:
 - `below' :: from point to the end of the buffer.
 - `above' :: from point to the beginning of the buffer.
 - `defun' :: limit to the current defun per `narrow-to-defun'.
-- nil     :: across the whole buffer."
+- `defun-and-below' :: as above but only operate from point onwards.
+- `outline' :: limit to the current outline level per `outline-regexp'.
+- `page' :: limit to the current page per `page-delimiter'.
+- `paragraph' :: in the current paragraph.
+- any other value :: across the whole buffer."
   (pcase scope
     ('below "from point to the END of the buffer")
     ('above "from point to the BEGINNING of the buffer")
     ('defun "in the current DEFUN")
+    ('defun-and-below "from point to the END of the current DEFUN")
+    ('outline "in the current OUTLINE level")
+    ('page "in the current PAGE")
+    ('paragraph "in the current PARAGRAPH")
     (_ "across the BUFFER")))
 
 (defun substitute--prettify-target-description (target)
@@ -179,9 +187,88 @@ Pass to it the TARGET and SCOPE arguments."
   (narrow-to-defun)
   (goto-char (point-min)))
 
+(defun substitute--scope-current-defun-and-below (target)
+  "Position point to match current TARGET and below only in this defun."
+  (narrow-to-defun)
+  (if-let* ((_ (region-active-p))
+            (bounds (region-bounds)))
+      (goto-char (caar bounds))
+    (thing-at-point-looking-at target)
+    (goto-char (match-beginning 0))))
+
 (defun substitute--scope-top-of-buffer ()
   "Position point to the top of the buffer."
   (widen)
+  (goto-char (point-min)))
+
+(defun substitute--get-bounds (regexp position)
+  "Get bounds of REGEXP from POSITION.
+If REGEXP does not start with ^, then prepend ^."
+  (let ((original-position (point))
+        (beg nil)
+        (end nil)
+        (rx (if (string-prefix-p "^" regexp)
+                regexp
+              (format "^\\(?:%s\\)" regexp))))
+    (goto-char position)
+    (when (re-search-backward rx nil t)
+      (setq beg (match-beginning 0)))
+    (goto-char (line-end-position))
+    (when (re-search-forward rx nil t)
+      (setq end (match-beginning 0)))
+    (goto-char original-position)
+    (cond
+     ((and beg end)
+      (cons beg end))
+     (beg
+      (cons beg (point-max)))
+     (end
+      (cons (point-min) end)))))
+
+(defun substitute-narrow-to-regexp (thing position)
+  "Narrow to the THING closest to POSITION.
+THING is the symbol of a variable whose value is a regular expression,
+such as `outline-regexp'."
+  (if-let* ((_ (boundp thing))
+            (regexp (symbol-value thing))
+            (bounds (substitute--get-bounds outline-regexp position))
+            (beg (car bounds))
+            (end (cdr bounds)))
+      (narrow-to-region beg end)
+    (user-error "There is no match for REGEXP here: `%s'" regexp)))
+
+(defun substitute--scope-current-outline ()
+  "Position point to the top of the current outline per `outline-regexp'.
+In programming modes this might be practically the same as
+`narrow-to-defun'.  In modes like Org or Markdown, it will be the
+current heading and the text below it without subheadings and their
+text."
+  (substitute-narrow-to-regexp 'outline-regexp (point))
+  (goto-char (point-min)))
+
+(defun substitute--scope-current-page ()
+  "Position point to the top of the current page per `page-delimiter'."
+  (substitute-narrow-to-regexp 'outline-regexp (point))
+  (goto-char (point-min)))
+
+;; NOTE 2025-11-29: I was hoping to use `substitute-narrow-to-regexp'
+;; with a simple regular expression for paragraphs, but then I looked
+;; at `forward-paragraph' and realised that what constitutes a
+;; "paragraph" is not a simple thing.
+(defun substitute--narrow-to-paragraph (position)
+  "Narrow to the paragraph closest to POSITION."
+  (goto-char position)
+  (let ((beg nil)
+        (end nil))
+    (start-of-paragraph-text)
+    (setq beg (point))
+    (end-of-paragraph-text)
+    (setq end (point))
+    (narrow-to-region beg end)))
+
+(defun substitute--scope-current-paragraph ()
+  "Position point to the top of the current paragraph."
+  (substitute--narrow-to-paragraph (point))
   (goto-char (point-min)))
 
 (defun substitute--setup-scope (target scope)
@@ -190,6 +277,10 @@ Pass to it the TARGET and SCOPE arguments."
     ('below (substitute--scope-current-and-below target))
     ('above (substitute--scope-current-and-above target))
     ('defun (substitute--scope-current-defun))
+    ('defun-and-below (substitute--scope-current-defun-and-below target))
+    ('outline (substitute--scope-current-outline))
+    ('page (substitute--scope-current-page))
+    ('paragraph (substitute--scope-current-paragraph))
     (_ (substitute--scope-top-of-buffer))))
 
 (defvar-local substitute--last-matches nil
@@ -313,6 +404,30 @@ same as always calling this command with FIXED-CASE." doc)
  "in the defun (per `narrow-to-defun')"
  'defun)
 
+;;;###autoload (autoload 'substitute-target-in-defun-and-below "substitute")
+(substitute-define-substitute-command
+ substitute-target-in-defun-and-below
+ "in the defun (per `narrow-to-defun') and going down"
+ 'defun-and-below)
+
+;;;###autoload (autoload 'substitute-target-in-outline "substitute")
+(substitute-define-substitute-command
+ substitute-target-in-outline
+ "in the current outline level"
+ 'outline)
+
+;;;###autoload (autoload 'substitute-target-in-page "substitute")
+(substitute-define-substitute-command
+ substitute-target-in-page
+ "in the current page"
+ 'page)
+
+;;;###autoload (autoload 'substitute-target-in-paragraph "substitute")
+(substitute-define-substitute-command
+ substitute-target-in-paragraph
+ "in the current paragraph"
+ 'paragraph)
+
 ;;;###autoload (autoload 'substitute-target-below-point "substitute")
 (substitute-define-substitute-command
  substitute-target-below-point
@@ -351,6 +466,10 @@ Meant to be assigned to a prefix key, like this:
 
 (define-key substitute-prefix-map (kbd "b") #'substitute-target-in-buffer)
 (define-key substitute-prefix-map (kbd "d") #'substitute-target-in-defun)
+(define-key substitute-prefix-map (kbd "D") #'substitute-target-in-defun-and-below)
+(define-key substitute-prefix-map (kbd "o") #'substitute-target-in-outline)
+(define-key substitute-prefix-map (kbd "p") #'substitute-target-in-paragraph)
+(define-key substitute-prefix-map (kbd "P") #'substitute-target-in-page)
 (define-key substitute-prefix-map (kbd "r") #'substitute-target-above-point)
 (define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)
 

@@ -1,4 +1,4 @@
-This is docSdZPex.info, produced by makeinfo version 6.8 from
+This is doc2qwWdA.info, produced by makeinfo version 7.1.1 from
 substitute.texi.
 
 Copyright (C) 2023-2025 Free Software Foundation, Inc.
@@ -20,7 +20,7 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: docSdZPex.info,  Node: Top,  Next: Overview,  Up: (dir)
+File: doc2qwWdA.info,  Node: Top,  Next: Installation,  Up: (dir)
 
 substitute: Efficiently replace targets in the buffer or context
 ****************************************************************
@@ -44,11 +44,11 @@ customization options for the Emacs package called ‘substitute’ (or
 pertinent to it.
 
    The documentation furnished herein corresponds to stable version
-0.3.0, released on 2024-05-20.  Any reference to a newer feature which
+0.4.0, released on 2025-11-29.  Any reference to a newer feature which
 does not yet form part of the latest tagged commit, is explicitly marked
 as such.
 
-   Current development target is 0.4.0-dev.
+   Current development target is 0.5.0-dev.
 
    • Package name (GNU ELPA): ‘substitute’
    • Official manual: <https://protesilaos.com/emacs/substitute>
@@ -57,8 +57,8 @@ as such.
         • GitLab: <https://gitlab.com/protesilaos/substitute>
    • Video demo:
      <https://protesilaos.com/codelog/2023-01-16-emacs-substitute-package-demo/>
-   • Backronym: Some Utilities Built to Substitute Targets Independent
-     of Their Utterances, Thoroughly and Easily.
+   • Backronym: Substitutions Uniformly Beget Standardisation for Text
+     Invariably Transfigured Unto This Entry.
 
    If you are viewing the README.org version of this file, please note
 that the GNU ELPA machinery automatically generates an Info manual out
@@ -66,19 +66,24 @@ of it.
 
 * Menu:
 
-* Overview::
 * Installation::
 * Sample configuration::
+* Overview::
 * Acknowledgements::
 * GNU Free Documentation License::
 * Indices::
 
-— The Detailed Node Listing —
+-- The Detailed Node Listing --
 
 Installation
 
 * GNU ELPA package::
 * Manual installation::
+
+Overview
+
+* Substitutions by their scope of application::
+* User options for the substitution commands::
 
 Indices
 
@@ -88,38 +93,127 @@ Indices
 
 
 
-File: docSdZPex.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
+File: doc2qwWdA.info,  Node: Installation,  Next: Sample configuration,  Prev: Top,  Up: Top
 
-1 Overview
+1 Installation
+**************
+
+* Menu:
+
+* GNU ELPA package::
+* Manual installation::
+
+
+File: doc2qwWdA.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
+
+1.1 GNU ELPA package
+====================
+
+The package is available as ‘substitute’.  Simply do:
+
+     M-x package-refresh-contents
+     M-x package-install
+
+   And search for it.
+
+   GNU ELPA provides the latest stable release.  Those who prefer to
+follow the development process in order to report bugs or suggest
+changes, can use the version of the package from the GNU-devel ELPA
+archive.  Read:
+<https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>.
+
+
+File: doc2qwWdA.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
+
+1.2 Manual installation
+=======================
+
+Assuming your Emacs files are found in ‘~/.emacs.d/’, execute the
+following commands in a shell prompt:
+
+     cd ~/.emacs.d
+
+     # Create a directory for manually-installed packages
+     mkdir manual-packages
+
+     # Go to the new directory
+     cd manual-packages
+
+     # Clone this repo, naming it "substitute"
+     git clone https://github.com/protesilaos/substitute substitute
+
+   Finally, in your ‘init.el’ (or equivalent) evaluate this:
+
+     ;; Make Elisp files in that directory available to the user.
+     (add-to-list 'load-path "~/.emacs.d/manual-packages/substitute")
+
+   Everything is in place to set up the package.
+
+
+File: doc2qwWdA.info,  Node: Sample configuration,  Next: Overview,  Prev: Installation,  Up: Top
+
+2 Sample configuration
+**********************
+
+     (use-package substitute
+       :ensure t
+       :config
+       ;; Set this to nil if you do not like visual feedback on the matching
+       ;; target.  Default is t.
+       (setq substitute-highlight nil)
+
+       ;; Set this to t if you want to always treat the letter casing
+       ;; literally.  Otherwise each command accepts a `C-u' prefix
+       ;; argument to do this on-demand.
+       (setq substitute-fixed-letter-case t)
+
+       ;; If you want a message reporting the matches that changed in the
+       ;; given context.  We don't do it by default.
+       (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
+
+       ;; Use C-c s as a prefix for all Substitute commands.
+       (define-key global-map (kbd "C-c s") #'substitute-prefix-map))
+
+
+File: doc2qwWdA.info,  Node: Overview,  Next: Acknowledgements,  Prev: Sample configuration,  Up: Top
+
+3 Overview
 **********
 
-Substitute is a set of commands that perform text replacement (i)
-throughout the buffer, (ii) limited to the current definition (per
-‘narrow-to-defun’), (iii) from point to the end of the buffer, and (iv)
-from point to the beginning of the buffer.
+Substitute is a set of commands that perform text replacement for the
+symbol at point (i) throughout the buffer, (ii) limited to the current
+definition or outline, (iii) from point to the end of the buffer, and
+(iv) from point to the beginning of the buffer.  Variations of these are
+also available (*note Substitutions by their scope of application::).
 
    These substitutions are meant to be as quick as possible and, as
 such, differ from the standard ‘query-replace’ (which I still use).  The
 provided commands prompt for substitute text and perform the
-substitution outright.
+substitution outright against the symbol at point.
 
-   The substitution prompt mentions the target-to-be-substituted.  It is
-possible to use the “future history” at this prompt (by typing ‘M-n’
+   The substitution prompt mentions the thing-to-be-substituted.  It is
+possible to use the "future history" at this prompt (by typing ‘M-n’
 with the default key bindings for the ‘next-history-element’ command).
 This populates the prompt with the text of the target.  As such, if we
 want to operate on ‘FOO’ to make it ‘FOO-BAR’, we use ‘M-n’ and then
 append ‘-BAR’.
 
-   By default, the substitution prompt informs the user about the target
-and highlights matches in the given scope (what the current command will
-substitute).  Highlights can be disabled by setting the user option
-‘substitute-highlight’ to nil.
+* Menu:
 
-   The substitution commands behave the same way except for their scope
-of application.  What they have in common is how they identify the
-target of the substitution: it is either the symbol at point or the text
-within the boundaries of the active region.  The differences in scope
-are as follows:
+* Substitutions by their scope of application::
+* User options for the substitution commands::
+
+
+File: doc2qwWdA.info,  Node: Substitutions by their scope of application,  Next: User options for the substitution commands,  Up: Overview
+
+3.1 Substitutions by their scope of application
+===============================================
+
+The substitution commands behave the same way except for their scope of
+application (*note User options for the substitution commands::).  What
+they have in common is how they identify the target of the substitution:
+it is either the symbol at point or the text within the boundaries of
+the active region.  The differences in scope are as follows:
 
   1. ‘substitute-target-in-buffer’: Substitute the target across the
      entire buffer.
@@ -134,6 +228,39 @@ are as follows:
   1. ‘substitute-target-above-point’: Substitute the target from point
      to the beginning of the buffer (alias
      ‘substitute-target-to-beginning-of-buffer’).
+
+  1. ‘substitute-target-in-outline’: Substitute the target within the
+     boundaries of the current outline level.  In Org mode, for example,
+     the current outline is the heading plus its paragraph text but not
+     the subheadings and their text.  In programming modes the outline
+     might be the same as the current definition, or could be a longer
+     stretch of text.  It depends on the buffer-local value of the
+     variable ‘outline-regexp’.
+
+  1. ‘substitute-target-in-page’: Substitute the target within the
+     boundaries of the current page.  A page is demarcated by the
+     buffer-local value of the variable ‘page-delimiter’.
+
+  1. ‘substitute-target-in-defun-and-below’: Substitute the target
+     within the boundaries of the current definition only from point
+     onwards.
+
+  1. ‘substitute-target-in-paragraph’: Substitute the target within the
+     boundaries of the current paragraph.
+
+
+File: doc2qwWdA.info,  Node: User options for the substitution commands,  Prev: Substitutions by their scope of application,  Up: Overview
+
+3.2 User options for the substitution commands
+==============================================
+
+These are applicable to all our commands (*note Substitutions by their
+scope of application::).
+
+   By default, the substitution prompt informs the user about the target
+and highlights matches in the given scope (what the current command will
+substitute).  Highlights can be disabled by setting the user option
+‘substitute-highlight’ to nil.
 
    All of the aforementioned commands accept an optional prefix argument
 (‘C-u’ with the default key bindings).  This passes the ‘FIXED-CASE’
@@ -171,88 +298,7 @@ bindings.  To change those, use something like this:
      (define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)
 
 
-File: docSdZPex.info,  Node: Installation,  Next: Sample configuration,  Prev: Overview,  Up: Top
-
-2 Installation
-**************
-
-* Menu:
-
-* GNU ELPA package::
-* Manual installation::
-
-
-File: docSdZPex.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
-
-2.1 GNU ELPA package
-====================
-
-The package is available as ‘substitute’.  Simply do:
-
-     M-x package-refresh-contents
-     M-x package-install
-
-   And search for it.
-
-   GNU ELPA provides the latest stable release.  Those who prefer to
-follow the development process in order to report bugs or suggest
-changes, can use the version of the package from the GNU-devel ELPA
-archive.  Read:
-<https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>.
-
-
-File: docSdZPex.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
-
-2.2 Manual installation
-=======================
-
-Assuming your Emacs files are found in ‘~/.emacs.d/’, execute the
-following commands in a shell prompt:
-
-     cd ~/.emacs.d
-
-     # Create a directory for manually-installed packages
-     mkdir manual-packages
-
-     # Go to the new directory
-     cd manual-packages
-
-     # Clone this repo, naming it "substitute"
-     git clone https://github.com/protesilaos/substitute substitute
-
-   Finally, in your ‘init.el’ (or equivalent) evaluate this:
-
-     ;; Make Elisp files in that directory available to the user.
-     (add-to-list 'load-path "~/.emacs.d/manual-packages/substitute")
-
-   Everything is in place to set up the package.
-
-
-File: docSdZPex.info,  Node: Sample configuration,  Next: Acknowledgements,  Prev: Installation,  Up: Top
-
-3 Sample configuration
-**********************
-
-     (require 'substitute)
-
-     ;; Set this to nil if you do not like visual feedback on the matching
-     ;; target.  Default is t.
-     (setq substitute-highlight nil)
-
-     ;; Set this to t if you want to always treat the letter casing
-     ;; literally.  Otherwise each command accepts a `C-u' prefix
-     ;; argument to do this on-demand.
-     (setq substitute-fixed-letter-case t)
-
-     ;; If you want a message reporting the matches that changed in the
-     ;; given context.  We don't do it by default.
-     (add-hook 'substitute-post-replace-functions #'substitute-report-operation)
-
-     ;; Use C-c s as a prefix for all Substitute commands.
-     (define-key global-map (kbd "C-c s") #'substitute-prefix-map)
-
-
-File: docSdZPex.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Sample configuration,  Up: Top
+File: doc2qwWdA.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Overview,  Up: Top
 
 4 Acknowledgements
 ******************
@@ -270,7 +316,7 @@ Ideas and/or user feedback
      Tomasz Hołubowicz, ersi-dnd, revrari.
 
 
-File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
+File: doc2qwWdA.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
 
 5 GNU Free Documentation License
 ********************************
@@ -293,7 +339,7 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      author and publisher a way to get credit for their work, while not
      being considered responsible for modifications made by others.
 
-     This License is a kind of “copyleft”, which means that derivative
+     This License is a kind of "copyleft", which means that derivative
      works of the document must themselves be free in the same sense.
      It complements the GNU General Public License, which is a copyleft
      license designed for free software.
@@ -314,18 +360,18 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      be distributed under the terms of this License.  Such a notice
      grants a world-wide, royalty-free license, unlimited in duration,
      to use that work under the conditions stated herein.  The
-     “Document”, below, refers to any such manual or work.  Any member
-     of the public is a licensee, and is addressed as “you”.  You accept
+     "Document", below, refers to any such manual or work.  Any member
+     of the public is a licensee, and is addressed as "you".  You accept
      the license if you copy, modify or distribute the work in a way
      requiring permission under copyright law.
 
-     A “Modified Version” of the Document means any work containing the
+     A "Modified Version" of the Document means any work containing the
      Document or a portion of it, either copied verbatim, or with
      modifications and/or translated into another language.
 
-     A “Secondary Section” is a named appendix or a front-matter section
+     A "Secondary Section" is a named appendix or a front-matter section
      of the Document that deals exclusively with the relationship of the
-     publishers or authors of the Document to the Document’s overall
+     publishers or authors of the Document to the Document's overall
      subject (or to related matters) and contains nothing that could
      fall directly within that overall subject.  (Thus, if the Document
      is in part a textbook of mathematics, a Secondary Section may not
@@ -334,7 +380,7 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      of legal, commercial, philosophical, ethical or political position
      regarding them.
 
-     The “Invariant Sections” are certain Secondary Sections whose
+     The "Invariant Sections" are certain Secondary Sections whose
      titles are designated, as being those of Invariant Sections, in the
      notice that says that the Document is released under this License.
      If a section does not fit the above definition of Secondary then it
@@ -342,13 +388,13 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      contain zero Invariant Sections.  If the Document does not identify
      any Invariant Sections then there are none.
 
-     The “Cover Texts” are certain short passages of text that are
+     The "Cover Texts" are certain short passages of text that are
      listed, as Front-Cover Texts or Back-Cover Texts, in the notice
      that says that the Document is released under this License.  A
      Front-Cover Text may be at most 5 words, and a Back-Cover Text may
      be at most 25 words.
 
-     A “Transparent” copy of the Document means a machine-readable copy,
+     A "Transparent" copy of the Document means a machine-readable copy,
      represented in a format whose specification is available to the
      general public, that is suitable for revising the document
      straightforwardly with generic text editors or (for images composed
@@ -360,7 +406,7 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      been arranged to thwart or discourage subsequent modification by
      readers is not Transparent.  An image format is not Transparent if
      used for any substantial amount of text.  A copy that is not
-     “Transparent” is called “Opaque”.
+     "Transparent" is called "Opaque".
 
      Examples of suitable formats for Transparent copies include plain
      ASCII without markup, Texinfo input format, LaTeX input format,
@@ -373,23 +419,23 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      the machine-generated HTML, PostScript or PDF produced by some word
      processors for output purposes only.
 
-     The “Title Page” means, for a printed book, the title page itself,
+     The "Title Page" means, for a printed book, the title page itself,
      plus such following pages as are needed to hold, legibly, the
      material this License requires to appear in the title page.  For
-     works in formats which do not have any title page as such, “Title
-     Page” means the text near the most prominent appearance of the
-     work’s title, preceding the beginning of the body of the text.
+     works in formats which do not have any title page as such, "Title
+     Page" means the text near the most prominent appearance of the
+     work's title, preceding the beginning of the body of the text.
 
-     The “publisher” means any person or entity that distributes copies
+     The "publisher" means any person or entity that distributes copies
      of the Document to the public.
 
-     A section “Entitled XYZ” means a named subunit of the Document
+     A section "Entitled XYZ" means a named subunit of the Document
      whose title either is precisely XYZ or contains XYZ in parentheses
      following text that translates XYZ in another language.  (Here XYZ
      stands for a specific section name mentioned below, such as
-     “Acknowledgements”, “Dedications”, “Endorsements”, or “History”.)
-     To “Preserve the Title” of such a section when you modify the
-     Document means that it remains a section “Entitled XYZ” according
+     "Acknowledgements", "Dedications", "Endorsements", or "History".)
+     To "Preserve the Title" of such a section when you modify the
+     Document means that it remains a section "Entitled XYZ" according
      to this definition.
 
      The Document may include Warranty Disclaimers next to the notice
@@ -419,7 +465,7 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
 
      If you publish printed copies (or copies in media that commonly
      have printed covers) of the Document, numbering more than 100, and
-     the Document’s license notice requires Cover Texts, you must
+     the Document's license notice requires Cover Texts, you must
      enclose the copies in covers that carry, clearly and legibly, all
      these Cover Texts: Front-Cover Texts on the front cover, and
      Back-Cover Texts on the back cover.  Both covers must also clearly
@@ -491,15 +537,15 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
           the Addendum below.
 
        G. Preserve in that license notice the full lists of Invariant
-          Sections and required Cover Texts given in the Document’s
+          Sections and required Cover Texts given in the Document's
           license notice.
 
        H. Include an unaltered copy of this License.
 
-       I. Preserve the section Entitled “History”, Preserve its Title,
+       I. Preserve the section Entitled "History", Preserve its Title,
           and add to it an item stating at least the title, year, new
           authors, and publisher of the Modified Version as given on the
-          Title Page.  If there is no section Entitled “History” in the
+          Title Page.  If there is no section Entitled "History" in the
           Document, create one stating the title, year, authors, and
           publisher of the Document as given on its Title Page, then add
           an item describing the Modified Version as stated in the
@@ -509,12 +555,12 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
           for public access to a Transparent copy of the Document, and
           likewise the network locations given in the Document for
           previous versions it was based on.  These may be placed in the
-          “History” section.  You may omit a network location for a work
+          "History" section.  You may omit a network location for a work
           that was published at least four years before the Document
           itself, or if the original publisher of the version it refers
           to gives permission.
 
-       K. For any section Entitled “Acknowledgements” or “Dedications”,
+       K. For any section Entitled "Acknowledgements" or "Dedications",
           Preserve the Title of the section, and preserve in the section
           all the substance and tone of each of the contributor
           acknowledgements and/or dedications given therein.
@@ -523,11 +569,11 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
           in their text and in their titles.  Section numbers or the
           equivalent are not considered part of the section titles.
 
-       M. Delete any section Entitled “Endorsements”.  Such a section
+       M. Delete any section Entitled "Endorsements".  Such a section
           may not be included in the Modified Version.
 
        N. Do not retitle any existing section to be Entitled
-          “Endorsements” or to conflict in title with any Invariant
+          "Endorsements" or to conflict in title with any Invariant
           Section.
 
        O. Preserve any Warranty Disclaimers.
@@ -536,15 +582,15 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      appendices that qualify as Secondary Sections and contain no
      material copied from the Document, you may at your option designate
      some or all of these sections as invariant.  To do this, add their
-     titles to the list of Invariant Sections in the Modified Version’s
+     titles to the list of Invariant Sections in the Modified Version's
      license notice.  These titles must be distinct from any other
      section titles.
 
-     You may add a section Entitled “Endorsements”, provided it contains
+     You may add a section Entitled "Endorsements", provided it contains
      nothing but endorsements of your Modified Version by various
-     parties—for example, statements of peer review or that the text has
-     been approved by an organization as the authoritative definition of
-     a standard.
+     parties--for example, statements of peer review or that the text
+     has been approved by an organization as the authoritative
+     definition of a standard.
 
      You may add a passage of up to five words as a Front-Cover Text,
      and a passage of up to 25 words as a Back-Cover Text, to the end of
@@ -582,10 +628,10 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      combined work.
 
      In the combination, you must combine any sections Entitled
-     “History” in the various original documents, forming one section
-     Entitled “History”; likewise combine any sections Entitled
-     “Acknowledgements”, and any sections Entitled “Dedications”.  You
-     must delete all sections Entitled “Endorsements.”
+     "History" in the various original documents, forming one section
+     Entitled "History"; likewise combine any sections Entitled
+     "Acknowledgements", and any sections Entitled "Dedications".  You
+     must delete all sections Entitled "Endorsements."
 
   6. COLLECTIONS OF DOCUMENTS
 
@@ -606,16 +652,16 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
 
      A compilation of the Document or its derivatives with other
      separate and independent documents or works, in or on a volume of a
-     storage or distribution medium, is called an “aggregate” if the
+     storage or distribution medium, is called an "aggregate" if the
      copyright resulting from the compilation is not used to limit the
-     legal rights of the compilation’s users beyond what the individual
+     legal rights of the compilation's users beyond what the individual
      works permit.  When the Document is included in an aggregate, this
      License does not apply to the other works in the aggregate which
      are not themselves derivative works of the Document.
 
      If the Cover Text requirement of section 3 is applicable to these
      copies of the Document, then if the Document is less than one half
-     of the entire aggregate, the Document’s Cover Texts may be placed
+     of the entire aggregate, the Document's Cover Texts may be placed
      on covers that bracket the Document within the aggregate, or the
      electronic equivalent of covers if the Document is in electronic
      form.  Otherwise they must appear on printed covers that bracket
@@ -637,8 +683,8 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      this License or a notice or disclaimer, the original version will
      prevail.
 
-     If a section in the Document is Entitled “Acknowledgements”,
-     “Dedications”, or “History”, the requirement (section 4) to
+     If a section in the Document is Entitled "Acknowledgements",
+     "Dedications", or "History", the requirement (section 4) to
      Preserve its Title (section 1) will typically require changing the
      actual title.
 
@@ -679,7 +725,7 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
 
      Each version of the License is given a distinguishing version
      number.  If the Document specifies that a particular numbered
-     version of this License “or any later version” applies to it, you
+     version of this License "or any later version" applies to it, you
      have the option of following the terms and conditions either of
      that specified version or of any later version that has been
      published (not as a draft) by the Free Software Foundation.  If the
@@ -687,29 +733,29 @@ File: docSdZPex.info,  Node: GNU Free Documentation License,  Next: Indices,  Pr
      choose any version ever published (not as a draft) by the Free
      Software Foundation.  If the Document specifies that a proxy can
      decide which future versions of this License can be used, that
-     proxy’s public statement of acceptance of a version permanently
+     proxy's public statement of acceptance of a version permanently
      authorizes you to choose that version for the Document.
 
   11. RELICENSING
 
-     “Massive Multiauthor Collaboration Site” (or “MMC Site”) means any
+     "Massive Multiauthor Collaboration Site" (or "MMC Site") means any
      World Wide Web server that publishes copyrightable works and also
      provides prominent facilities for anybody to edit those works.  A
      public wiki that anybody can edit is an example of such a server.
-     A “Massive Multiauthor Collaboration” (or “MMC”) contained in the
+     A "Massive Multiauthor Collaboration" (or "MMC") contained in the
      site means any set of copyrightable works thus published on the MMC
      site.
 
-     “CC-BY-SA” means the Creative Commons Attribution-Share Alike 3.0
+     "CC-BY-SA" means the Creative Commons Attribution-Share Alike 3.0
      license published by Creative Commons Corporation, a not-for-profit
      corporation with a principal place of business in San Francisco,
      California, as well as future copyleft versions of that license
      published by that same organization.
 
-     “Incorporate” means to publish or republish a Document, in whole or
+     "Incorporate" means to publish or republish a Document, in whole or
      in part, as part of another Document.
 
-     An MMC is “eligible for relicensing” if it is licensed under this
+     An MMC is "eligible for relicensing" if it is licensed under this
      License, and if all works that were first published under this
      License somewhere other than this MMC, and subsequently
      incorporated in whole or in part into the MMC, (1) had no cover
@@ -736,7 +782,7 @@ notices just after the title page:
        Free Documentation License''.
 
    If you have Invariant Sections, Front-Cover Texts and Back-Cover
-Texts, replace the “with...Texts.” line with this:
+Texts, replace the "with...Texts." line with this:
 
          with the Invariant Sections being LIST THEIR TITLES, with
          the Front-Cover Texts being LIST, and with the Back-Cover Texts
@@ -752,7 +798,7 @@ software license, such as the GNU General Public License, to permit
 their use in free software.
 
 
-File: docSdZPex.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
+File: doc2qwWdA.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
 
 6 Indices
 *********
@@ -764,7 +810,7 @@ File: docSdZPex.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up
 * Concept index::
 
 
-File: docSdZPex.info,  Node: Function index,  Next: Variable index,  Up: Indices
+File: doc2qwWdA.info,  Node: Function index,  Next: Variable index,  Up: Indices
 
 6.1 Function index
 ==================
@@ -772,17 +818,33 @@ File: docSdZPex.info,  Node: Function index,  Next: Variable index,  Up: Indices
  [index ]
 * Menu:
 
-* ~substitute-target-to-beginning-of-buffer: Overview.         (line 44)
-* substitute-prefix-map:                 Overview.             (line 69)
-* substitute-report-operation:           Overview.             (line 59)
-* substitute-target-above-point:         Overview.             (line 44)
-* substitute-target-below-point:         Overview.             (line 40)
-* substitute-target-in-buffer:           Overview.             (line 34)
-* substitute-target-in-defun:            Overview.             (line 37)
-* substitute-target-to-end-of-buffer:    Overview.             (line 40)
+* ~substitute-target-to-beginning-of-buffer: Substitutions by their scope of application.
+                                                               (line 22)
+* substitute-prefix-map:                 User options for the substitution commands.
+                                                               (line 35)
+* substitute-report-operation:           User options for the substitution commands.
+                                                               (line 25)
+* substitute-target-above-point:         Substitutions by their scope of application.
+                                                               (line 22)
+* substitute-target-below-point:         Substitutions by their scope of application.
+                                                               (line 18)
+* substitute-target-in-buffer:           Substitutions by their scope of application.
+                                                               (line 12)
+* substitute-target-in-defun:            Substitutions by their scope of application.
+                                                               (line 15)
+* substitute-target-in-defun-and-below:  Substitutions by their scope of application.
+                                                               (line 38)
+* substitute-target-in-outline:          Substitutions by their scope of application.
+                                                               (line 26)
+* substitute-target-in-page:             Substitutions by their scope of application.
+                                                               (line 34)
+* substitute-target-in-paragraph:        Substitutions by their scope of application.
+                                                               (line 42)
+* substitute-target-to-end-of-buffer:    Substitutions by their scope of application.
+                                                               (line 18)
 
 
-File: docSdZPex.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
+File: doc2qwWdA.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
 
 6.2 Variable index
 ==================
@@ -790,12 +852,15 @@ File: docSdZPex.info,  Node: Variable index,  Next: Concept index,  Prev: Functi
  [index ]
 * Menu:
 
-* substitute-fixed-letter-case:          Overview.             (line 48)
-* substitute-highlight:                  Overview.             (line 23)
-* substitute-post-replace-functions:     Overview.             (line 59)
+* substitute-fixed-letter-case:          User options for the substitution commands.
+                                                               (line 14)
+* substitute-highlight:                  User options for the substitution commands.
+                                                               (line  9)
+* substitute-post-replace-functions:     User options for the substitution commands.
+                                                               (line 25)
 
 
-File: docSdZPex.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
+File: doc2qwWdA.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 6.3 Concept index
 =================
@@ -809,18 +874,20 @@ File: docSdZPex.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 
 Tag Table:
-Node: Top868
-Node: Overview3116
-Node: Installation7210
-Node: GNU ELPA package7397
-Node: Manual installation7962
-Node: Sample configuration8747
-Node: Acknowledgements9624
-Node: GNU Free Documentation License10074
-Node: Indices35417
-Node: Function index35593
-Node: Variable index36322
-Node: Concept index36708
+Node: Top870
+Node: Installation3223
+Node: GNU ELPA package3405
+Node: Manual installation3970
+Node: Sample configuration4755
+Node: Overview5682
+Node: Substitutions by their scope of application6920
+Node: User options for the substitution commands9002
+Node: Acknowledgements11589
+Node: GNU Free Documentation License12027
+Node: Indices37169
+Node: Function index37345
+Node: Variable index39400
+Node: Concept index40041
 
 End Tag Table
 
