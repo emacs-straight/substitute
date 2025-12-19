@@ -1,4 +1,4 @@
-This is doc2qwWdA.info, produced by makeinfo version 7.1.1 from
+This is docivslc5.info, produced by makeinfo version 7.1.1 from
 substitute.texi.
 
 Copyright (C) 2023-2025 Free Software Foundation, Inc.
@@ -20,7 +20,7 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: doc2qwWdA.info,  Node: Top,  Next: Installation,  Up: (dir)
+File: docivslc5.info,  Node: Top,  Next: Installation,  Up: (dir)
 
 substitute: Efficiently replace targets in the buffer or context
 ****************************************************************
@@ -93,7 +93,7 @@ Indices
 
 
 
-File: doc2qwWdA.info,  Node: Installation,  Next: Sample configuration,  Prev: Top,  Up: Top
+File: docivslc5.info,  Node: Installation,  Next: Sample configuration,  Prev: Top,  Up: Top
 
 1 Installation
 **************
@@ -104,7 +104,7 @@ File: doc2qwWdA.info,  Node: Installation,  Next: Sample configuration,  Prev: T
 * Manual installation::
 
 
-File: doc2qwWdA.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
+File: docivslc5.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
 
 1.1 GNU ELPA package
 ====================
@@ -123,7 +123,7 @@ archive.  Read:
 <https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>.
 
 
-File: doc2qwWdA.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
+File: docivslc5.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
 
 1.2 Manual installation
 =======================
@@ -150,7 +150,7 @@ following commands in a shell prompt:
    Everything is in place to set up the package.
 
 
-File: doc2qwWdA.info,  Node: Sample configuration,  Next: Overview,  Prev: Installation,  Up: Top
+File: docivslc5.info,  Node: Sample configuration,  Next: Overview,  Prev: Installation,  Up: Top
 
 2 Sample configuration
 **********************
@@ -175,7 +175,7 @@ File: doc2qwWdA.info,  Node: Sample configuration,  Next: Overview,  Prev: Insta
        (define-key global-map (kbd "C-c s") #'substitute-prefix-map))
 
 
-File: doc2qwWdA.info,  Node: Overview,  Next: Acknowledgements,  Prev: Sample configuration,  Up: Top
+File: docivslc5.info,  Node: Overview,  Next: Acknowledgements,  Prev: Sample configuration,  Up: Top
 
 3 Overview
 **********
@@ -204,7 +204,7 @@ append ‘-BAR’.
 * User options for the substitution commands::
 
 
-File: doc2qwWdA.info,  Node: Substitutions by their scope of application,  Next: User options for the substitution commands,  Up: Overview
+File: docivslc5.info,  Node: Substitutions by their scope of application,  Next: User options for the substitution commands,  Up: Overview
 
 3.1 Substitutions by their scope of application
 ===============================================
@@ -249,7 +249,7 @@ the active region.  The differences in scope are as follows:
      boundaries of the current paragraph.
 
 
-File: doc2qwWdA.info,  Node: User options for the substitution commands,  Prev: Substitutions by their scope of application,  Up: Overview
+File: docivslc5.info,  Node: User options for the substitution commands,  Prev: Substitutions by their scope of application,  Up: Overview
 
 3.2 User options for the substitution commands
 ==============================================
@@ -272,6 +272,14 @@ case.  Whereas without the prefix argument the result would be
 To always have fixed letter casing, set the user option
 ‘substitute-fixed-letter-case’ to a non-nil value.  Doing so is the same
 as always calling the aforementioned commands with a prefix argument.
+
+   Every substitution is set up to ignore narrowing restrictions by
+default.  This is controlled by the user option
+‘substitute-ignore-narrowing’.  What this means is that a command such
+as ‘substitute-target-in-buffer’ will make changes across the buffer
+even if narrowing is in effect.  Users who prefer to operate only within
+the narrowed portion of the buffer must set
+‘substitute-ignore-narrowing’ to ‘nil’.  [ Part of 0.5.0-dev.  ]
 
    Every substitution triggers the ‘substitute-post-replace-functions’.
 This special hook runs any function assigned to it with four arguments:
@@ -298,7 +306,7 @@ bindings.  To change those, use something like this:
      (define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)
 
 
-File: doc2qwWdA.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Overview,  Up: Top
+File: docivslc5.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Overview,  Up: Top
 
 4 Acknowledgements
 ******************
@@ -313,10 +321,10 @@ Contributions to code or the manual
      Ed Tavinor, Kostas Andreadis, Wang Chunye.
 
 Ideas and/or user feedback
-     Tomasz Hołubowicz, ersi-dnd, revrari.
+     Tomasz Hołubowicz, ersi-dnd, revrari, zauberen.
 
 
-File: doc2qwWdA.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
+File: docivslc5.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
 
 5 GNU Free Documentation License
 ********************************
@@ -798,7 +806,7 @@ software license, such as the GNU General Public License, to permit
 their use in free software.
 
 
-File: doc2qwWdA.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
+File: docivslc5.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
 
 6 Indices
 *********
@@ -810,7 +818,7 @@ File: doc2qwWdA.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up
 * Concept index::
 
 
-File: doc2qwWdA.info,  Node: Function index,  Next: Variable index,  Up: Indices
+File: docivslc5.info,  Node: Function index,  Next: Variable index,  Up: Indices
 
 6.1 Function index
 ==================
@@ -821,9 +829,9 @@ File: doc2qwWdA.info,  Node: Function index,  Next: Variable index,  Up: Indices
 * ~substitute-target-to-beginning-of-buffer: Substitutions by their scope of application.
                                                                (line 22)
 * substitute-prefix-map:                 User options for the substitution commands.
-                                                               (line 35)
+                                                               (line 43)
 * substitute-report-operation:           User options for the substitution commands.
-                                                               (line 25)
+                                                               (line 33)
 * substitute-target-above-point:         Substitutions by their scope of application.
                                                                (line 22)
 * substitute-target-below-point:         Substitutions by their scope of application.
@@ -844,7 +852,7 @@ File: doc2qwWdA.info,  Node: Function index,  Next: Variable index,  Up: Indices
                                                                (line 18)
 
 
-File: doc2qwWdA.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
+File: docivslc5.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
 
 6.2 Variable index
 ==================
@@ -856,11 +864,13 @@ File: doc2qwWdA.info,  Node: Variable index,  Next: Concept index,  Prev: Functi
                                                                (line 14)
 * substitute-highlight:                  User options for the substitution commands.
                                                                (line  9)
-* substitute-post-replace-functions:     User options for the substitution commands.
+* substitute-ignore-narrowing:           User options for the substitution commands.
                                                                (line 25)
+* substitute-post-replace-functions:     User options for the substitution commands.
+                                                               (line 33)
 
 
-File: doc2qwWdA.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
+File: docivslc5.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 6.3 Concept index
 =================
@@ -882,12 +892,12 @@ Node: Sample configuration4755
 Node: Overview5682
 Node: Substitutions by their scope of application6920
 Node: User options for the substitution commands9002
-Node: Acknowledgements11589
-Node: GNU Free Documentation License12027
-Node: Indices37169
-Node: Function index37345
-Node: Variable index39400
-Node: Concept index40041
+Node: Acknowledgements12044
+Node: GNU Free Documentation License12492
+Node: Indices37634
+Node: Function index37810
+Node: Variable index39865
+Node: Concept index40664
 
 End Tag Table
 
