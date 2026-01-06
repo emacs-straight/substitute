@@ -1,7 +1,7 @@
-This is docivslc5.info, produced by makeinfo version 7.1.1 from
+This is docP3ZOM0.info, produced by makeinfo version 7.1.1 from
 substitute.texi.
 
-Copyright (C) 2023-2025 Free Software Foundation, Inc.
+Copyright (C) 2023-2026 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -20,12 +20,12 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: docivslc5.info,  Node: Top,  Next: Installation,  Up: (dir)
+File: docP3ZOM0.info,  Node: Top,  Next: Installation,  Up: (dir)
 
 substitute: Efficiently replace targets in the buffer or context
 ****************************************************************
 
-Copyright (C) 2023-2025 Free Software Foundation, Inc.
+Copyright (C) 2023-2026 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -44,11 +44,11 @@ customization options for the Emacs package called ‘substitute’ (or
 pertinent to it.
 
    The documentation furnished herein corresponds to stable version
-0.4.0, released on 2025-11-29.  Any reference to a newer feature which
+0.5.0, released on 2026-01-05.  Any reference to a newer feature which
 does not yet form part of the latest tagged commit, is explicitly marked
 as such.
 
-   Current development target is 0.5.0-dev.
+   Current development target is 0.6.0-dev.
 
    • Package name (GNU ELPA): ‘substitute’
    • Official manual: <https://protesilaos.com/emacs/substitute>
@@ -93,7 +93,7 @@ Indices
 
 
 
-File: docivslc5.info,  Node: Installation,  Next: Sample configuration,  Prev: Top,  Up: Top
+File: docP3ZOM0.info,  Node: Installation,  Next: Sample configuration,  Prev: Top,  Up: Top
 
 1 Installation
 **************
@@ -104,7 +104,7 @@ File: docivslc5.info,  Node: Installation,  Next: Sample configuration,  Prev: T
 * Manual installation::
 
 
-File: docivslc5.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
+File: docP3ZOM0.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
 
 1.1 GNU ELPA package
 ====================
@@ -123,7 +123,7 @@ archive.  Read:
 <https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>.
 
 
-File: docivslc5.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
+File: docP3ZOM0.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
 
 1.2 Manual installation
 =======================
@@ -150,7 +150,7 @@ following commands in a shell prompt:
    Everything is in place to set up the package.
 
 
-File: docivslc5.info,  Node: Sample configuration,  Next: Overview,  Prev: Installation,  Up: Top
+File: docP3ZOM0.info,  Node: Sample configuration,  Next: Overview,  Prev: Installation,  Up: Top
 
 2 Sample configuration
 **********************
@@ -175,7 +175,7 @@ File: docivslc5.info,  Node: Sample configuration,  Next: Overview,  Prev: Insta
        (define-key global-map (kbd "C-c s") #'substitute-prefix-map))
 
 
-File: docivslc5.info,  Node: Overview,  Next: Acknowledgements,  Prev: Sample configuration,  Up: Top
+File: docP3ZOM0.info,  Node: Overview,  Next: Acknowledgements,  Prev: Sample configuration,  Up: Top
 
 3 Overview
 **********
@@ -204,7 +204,7 @@ append ‘-BAR’.
 * User options for the substitution commands::
 
 
-File: docivslc5.info,  Node: Substitutions by their scope of application,  Next: User options for the substitution commands,  Up: Overview
+File: docP3ZOM0.info,  Node: Substitutions by their scope of application,  Next: User options for the substitution commands,  Up: Overview
 
 3.1 Substitutions by their scope of application
 ===============================================
@@ -249,7 +249,7 @@ the active region.  The differences in scope are as follows:
      boundaries of the current paragraph.
 
 
-File: docivslc5.info,  Node: User options for the substitution commands,  Prev: Substitutions by their scope of application,  Up: Overview
+File: docP3ZOM0.info,  Node: User options for the substitution commands,  Prev: Substitutions by their scope of application,  Up: Overview
 
 3.2 User options for the substitution commands
 ==============================================
@@ -279,7 +279,7 @@ default.  This is controlled by the user option
 as ‘substitute-target-in-buffer’ will make changes across the buffer
 even if narrowing is in effect.  Users who prefer to operate only within
 the narrowed portion of the buffer must set
-‘substitute-ignore-narrowing’ to ‘nil’.  [ Part of 0.5.0-dev.  ]
+‘substitute-ignore-narrowing’ to ‘nil’.
 
    Every substitution triggers the ‘substitute-post-replace-functions’.
 This special hook runs any function assigned to it with four arguments:
@@ -306,7 +306,7 @@ bindings.  To change those, use something like this:
      (define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)
 
 
-File: docivslc5.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Overview,  Up: Top
+File: docP3ZOM0.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Overview,  Up: Top
 
 4 Acknowledgements
 ******************
@@ -324,7 +324,7 @@ Ideas and/or user feedback
      Tomasz Hołubowicz, ersi-dnd, revrari, zauberen.
 
 
-File: docivslc5.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
+File: docP3ZOM0.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
 
 5 GNU Free Documentation License
 ********************************
@@ -806,7 +806,7 @@ software license, such as the GNU General Public License, to permit
 their use in free software.
 
 
-File: docivslc5.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
+File: docP3ZOM0.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
 
 6 Indices
 *********
@@ -818,7 +818,7 @@ File: docivslc5.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up
 * Concept index::
 
 
-File: docivslc5.info,  Node: Function index,  Next: Variable index,  Up: Indices
+File: docP3ZOM0.info,  Node: Function index,  Next: Variable index,  Up: Indices
 
 6.1 Function index
 ==================
@@ -852,7 +852,7 @@ File: docivslc5.info,  Node: Function index,  Next: Variable index,  Up: Indices
                                                                (line 18)
 
 
-File: docivslc5.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
+File: docP3ZOM0.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
 
 6.2 Variable index
 ==================
@@ -870,7 +870,7 @@ File: docivslc5.info,  Node: Variable index,  Next: Concept index,  Prev: Functi
                                                                (line 33)
 
 
-File: docivslc5.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
+File: docP3ZOM0.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 6.3 Concept index
 =================
@@ -892,12 +892,12 @@ Node: Sample configuration4755
 Node: Overview5682
 Node: Substitutions by their scope of application6920
 Node: User options for the substitution commands9002
-Node: Acknowledgements12044
-Node: GNU Free Documentation License12492
-Node: Indices37634
-Node: Function index37810
-Node: Variable index39865
-Node: Concept index40664
+Node: Acknowledgements12019
+Node: GNU Free Documentation License12467
+Node: Indices37609
+Node: Function index37785
+Node: Variable index39840
+Node: Concept index40639
 
 End Tag Table
 
