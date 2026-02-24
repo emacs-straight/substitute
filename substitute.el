@@ -267,7 +267,7 @@ text."
 
 (defun substitute--scope-current-page ()
   "Position point to the top of the current page per `page-delimiter'."
-  (substitute-narrow-to-regexp 'outline-regexp (point))
+  (narrow-to-page)
   (goto-char (point-min)))
 
 ;; NOTE 2025-11-29: I was hoping to use `substitute-narrow-to-regexp'
@@ -413,56 +413,58 @@ same as always calling this command with FIXED-CASE." doc)
               current-prefix-arg)))
      (substitute--operate target sub ,scope fixed-case)))
 
-;;;###autoload (autoload 'substitute-target-in-buffer "substitute")
+;;;###autoload (autoload 'substitute-target-in-buffer "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-in-buffer
  "throughout the buffer")
 
-;;;###autoload (autoload 'substitute-target-in-defun "substitute")
+;;;###autoload (autoload 'substitute-target-in-defun "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-in-defun
  "in the defun (per `narrow-to-defun')"
  'defun)
 
-;;;###autoload (autoload 'substitute-target-in-defun-and-below "substitute")
+;;;###autoload (autoload 'substitute-target-in-defun-and-below "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-in-defun-and-below
  "in the defun (per `narrow-to-defun') and going down"
  'defun-and-below)
 
-;;;###autoload (autoload 'substitute-target-in-outline "substitute")
+;;;###autoload (autoload 'substitute-target-in-outline "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-in-outline
  "in the current outline level"
  'outline)
 
-;;;###autoload (autoload 'substitute-target-in-page "substitute")
+;;;###autoload (autoload 'substitute-target-in-page "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-in-page
  "in the current page"
  'page)
 
-;;;###autoload (autoload 'substitute-target-in-paragraph "substitute")
+;;;###autoload (autoload 'substitute-target-in-paragraph "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-in-paragraph
  "in the current paragraph"
  'paragraph)
 
-;;;###autoload (autoload 'substitute-target-below-point "substitute")
+;;;###autoload (autoload 'substitute-target-below-point "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-below-point
  "to the end of the buffer"
  'below)
 
+;;;###autoload
 (defalias 'substitute-target-to-end-of-buffer
   'substitute-target-below-point)
 
-;;;###autoload (autoload 'substitute-target-above-point "substitute")
+;;;###autoload (autoload 'substitute-target-above-point "substitute" nil t)
 (substitute-define-substitute-command
  substitute-target-above-point
  "to the beginning of the buffer"
  'above)
 
+;;;###autoload
 (defalias 'substitute-target-to-beginning-of-buffer
   'substitute-target-above-point)
 
