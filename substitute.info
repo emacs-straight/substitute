@@ -247,6 +247,9 @@ the active region.  The differences in scope are as follows:
   1. ‘substitute-target-in-paragraph’: Substitute the target within the
      boundaries of the current paragraph.
 
+  1. ‘substitute-target-on-line’: Substitute the target only on the
+     current line.  [ Part of 0.6.0-dev.  ]
+
 
 File: substitute.info,  Node: User options for the substitution commands,  Prev: Substitutions by their scope of application,  Up: Overview
 
@@ -847,6 +850,8 @@ File: substitute.info,  Node: Function index,  Next: Variable index,  Up: Indice
                                                                (line 34)
 * substitute-target-in-paragraph:        Substitutions by their scope of application.
                                                                (line 42)
+* substitute-target-on-line:             Substitutions by their scope of application.
+                                                               (line 45)
 * substitute-target-to-end-of-buffer:    Substitutions by their scope of application.
                                                                (line 18)
 
@@ -889,13 +894,13 @@ Node: Manual installation3971
 Node: Sample configuration4757
 Node: Overview5685
 Node: Substitutions by their scope of application6924
-Node: User options for the substitution commands9007
-Node: Acknowledgements12025
-Node: GNU Free Documentation License12491
-Node: Indices37634
-Node: Function index37811
-Node: Variable index39867
-Node: Concept index40667
+Node: User options for the substitution commands9124
+Node: Acknowledgements12142
+Node: GNU Free Documentation License12608
+Node: Indices37751
+Node: Function index37928
+Node: Variable index40143
+Node: Concept index40943
 
 End Tag Table
 
