@@ -38,10 +38,9 @@ Copyright (C) 2023-2026 Free Software Foundation, Inc.
      (a) The FSF’s Back-Cover Text is: “You have the freedom to copy and
      modify this GNU manual.”
 
-   This manual, written by Protesilaos Stavrou, describes the
-customization options for the Emacs package called ‘substitute’ (or
-‘substitute.el’), and provides every other piece of information
-pertinent to it.
+   This manual, written by Protesilaos, describes the customization
+options for the Emacs package called ‘substitute’ (or ‘substitute.el’),
+and provides every other piece of information pertinent to it.
 
    The documentation furnished herein corresponds to stable version
 0.5.0, released on 2026-01-05.  Any reference to a newer feature which
@@ -317,7 +316,7 @@ File: substitute.info,  Node: Acknowledgements,  Next: GNU Free Documentation Li
 matters.
 
 Author/maintainer
-     Protesilaos Stavrou.
+     Protesilaos.
 
 Contributions to code or the manual
      Ed Tavinor, Kostas Andreadis, Morgan Willcock, Wang Chunye.
@@ -888,19 +887,19 @@ File: substitute.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 Tag Table:
 Node: Top869
-Node: Installation3222
-Node: GNU ELPA package3405
-Node: Manual installation3971
-Node: Sample configuration4757
-Node: Overview5685
-Node: Substitutions by their scope of application6924
-Node: User options for the substitution commands9124
-Node: Acknowledgements12142
-Node: GNU Free Documentation License12608
-Node: Indices37751
-Node: Function index37928
-Node: Variable index40143
-Node: Concept index40943
+Node: Installation3214
+Node: GNU ELPA package3397
+Node: Manual installation3963
+Node: Sample configuration4749
+Node: Overview5677
+Node: Substitutions by their scope of application6916
+Node: User options for the substitution commands9116
+Node: Acknowledgements12134
+Node: GNU Free Documentation License12592
+Node: Indices37735
+Node: Function index37912
+Node: Variable index40127
+Node: Concept index40927
 
 End Tag Table
 
