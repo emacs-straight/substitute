@@ -62,11 +62,6 @@ with a universal prefix argument."
   :group 'substitute
   :type 'boolean)
 
-(define-obsolete-variable-alias
-  'substitute-post-replace-hook
-  'substitute-post-replace-functions
-  "0.2.0")
-
 (defcustom substitute-post-replace-functions nil
   "Special hook to run after a substitution command.
 Every function is called with four arguments: TARGET, SUB, COUNT,
@@ -90,9 +85,8 @@ narrowed portion of the buffer."
   :type 'boolean)
 
 (defface substitute-match
-  `((t :inherit ,(if-let* ((face 'lazy-highlight)
-                           (_ (facep face)))
-                     face
+  `((t :inherit ,(if (facep 'lazy-highlight)
+                     'lazy-highlight
                    'secondary-selection)))
   "Face to highlight matches of the given target."
   :group 'substitute)
@@ -112,7 +106,7 @@ Possible meaningful values for SCOPE are:
 - `outline' :: limit to the current outline level per `outline-regexp'.
 - `page' :: limit to the current page per `page-delimiter'.
 - `paragraph' :: in the current paragraph.
-- `line' :: on the current line.
+- `line' :: in the current line.
 - any other value :: across the whole buffer."
   (pcase scope
     ('below "from point to the END of the buffer")
@@ -169,16 +163,20 @@ Highlight the TARGET's matching occurences per the user option
       (substitute--remove-highlights)
       (setq-local substitute--last-matches nil))))
 
-(defun substitute--prompt (target scope)
-  "Return appropriate prompt based on `substitute-highlight'.
-Pass to it the TARGET and SCOPE arguments."
-  (barf-if-buffer-read-only)
+(defun substitute--highlight (target scope)
+  "Do what `substitute-highlight' entails for TARGET in SCOPE."
   (funcall
    (if substitute-highlight
        'substitute--prompt-with-highlight
      'substitute--prompt-without-highlight)
    target
    scope))
+
+(defun substitute--prompt (target scope)
+  "Return appropriate prompt based on `substitute-highlight'.
+Pass to it the TARGET and SCOPE arguments."
+  (barf-if-buffer-read-only)
+  (substitute--highlight target scope))
 
 (defun substitute--widen ()
   "Do `widen' if `substitute-ignore-narrowing' is non-nil."
@@ -188,18 +186,16 @@ Pass to it the TARGET and SCOPE arguments."
 (defun substitute--scope-current-and-below (target)
   "Position point to match current TARGET and below."
   (substitute--widen)
-  (if-let* ((_ (region-active-p))
-            (bounds (region-bounds)))
-      (goto-char (caar bounds))
+  (if (region-active-p)
+      (goto-char (region-end))
     (thing-at-point-looking-at target)
     (goto-char (match-beginning 0))))
 
 (defun substitute--scope-current-and-above (target)
   "Position point to match current TARGET and above."
   (substitute--widen)
-  (if-let* ((_ (region-active-p))
-            (bounds (region-bounds)))
-      (goto-char (cdar bounds))
+  (if (region-active-p)
+      (goto-char (region-beginning))
     (thing-at-point-looking-at target)
     (goto-char (match-end 0))))
 
@@ -461,10 +457,10 @@ same as always calling this command with FIXED-CASE." doc)
  "in the current paragraph"
  'paragraph)
 
-;;;###autoload (autoload 'substitute-target-on-line "substitute" nil t)
+;;;###autoload (autoload 'substitute-target-in-line "substitute" nil t)
 (substitute-define-substitute-command
- substitute-target-on-line
- "on the current line"
+ substitute-target-in-line
+ "in the current line"
  'line)
 
 ;;;###autoload (autoload 'substitute-target-below-point "substitute" nil t)
@@ -510,7 +506,7 @@ Meant to be assigned to a prefix key, like this:
 (define-key substitute-prefix-map (kbd "D") #'substitute-target-in-defun-and-below)
 (define-key substitute-prefix-map (kbd "o") #'substitute-target-in-outline)
 (define-key substitute-prefix-map (kbd "p") #'substitute-target-in-paragraph)
-(define-key substitute-prefix-map (kbd "l") #'substitute-target-on-line)
+(define-key substitute-prefix-map (kbd "l") #'substitute-target-in-line)
 (define-key substitute-prefix-map (kbd "P") #'substitute-target-in-page)
 (define-key substitute-prefix-map (kbd "r") #'substitute-target-above-point)
 (define-key substitute-prefix-map (kbd "s") #'substitute-target-below-point)

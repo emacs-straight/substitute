@@ -1,4 +1,4 @@
-This is substitute.info, produced by makeinfo version 7.2 from
+This is substitute.info, produced by makeinfo version 7.1.1 from
 substitute.texi.
 
 Copyright (C) 2023-2026 Free Software Foundation, Inc.
@@ -89,6 +89,7 @@ Indices
 * Function index::
 * Variable index::
 * Concept index::
+
 
 
 File: substitute.info,  Node: Installation,  Next: Sample configuration,  Prev: Top,  Up: Top
@@ -246,7 +247,7 @@ the active region.  The differences in scope are as follows:
   1. ‘substitute-target-in-paragraph’: Substitute the target within the
      boundaries of the current paragraph.
 
-  1. ‘substitute-target-on-line’: Substitute the target only on the
+  1. ‘substitute-target-in-line’: Substitute the target only on the
      current line.  [ Part of 0.6.0-dev.  ]
 
 
@@ -843,14 +844,14 @@ File: substitute.info,  Node: Function index,  Next: Variable index,  Up: Indice
                                                                (line 15)
 * substitute-target-in-defun-and-below:  Substitutions by their scope of application.
                                                                (line 38)
+* substitute-target-in-line:             Substitutions by their scope of application.
+                                                               (line 45)
 * substitute-target-in-outline:          Substitutions by their scope of application.
                                                                (line 26)
 * substitute-target-in-page:             Substitutions by their scope of application.
                                                                (line 34)
 * substitute-target-in-paragraph:        Substitutions by their scope of application.
                                                                (line 42)
-* substitute-target-on-line:             Substitutions by their scope of application.
-                                                               (line 45)
 * substitute-target-to-end-of-buffer:    Substitutions by their scope of application.
                                                                (line 18)
 
@@ -884,27 +885,27 @@ File: substitute.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 * Contributors:                          Acknowledgements.      (line 6)
 * Installation instructions:             Installation.          (line 6)
 
+
 
 Tag Table:
-Node: Top869
-Node: Installation3214
-Node: GNU ELPA package3397
-Node: Manual installation3963
-Node: Sample configuration4749
-Node: Overview5677
-Node: Substitutions by their scope of application6916
-Node: User options for the substitution commands9116
-Node: Acknowledgements12134
-Node: GNU Free Documentation License12592
-Node: Indices37735
-Node: Function index37912
-Node: Variable index40127
-Node: Concept index40927
+Node: Top871
+Node: Installation3217
+Node: GNU ELPA package3400
+Node: Manual installation3966
+Node: Sample configuration4752
+Node: Overview5680
+Node: Substitutions by their scope of application6919
+Node: User options for the substitution commands9119
+Node: Acknowledgements12137
+Node: GNU Free Documentation License12595
+Node: Indices37738
+Node: Function index37915
+Node: Variable index40130
+Node: Concept index40930
 
 End Tag Table
 
 
 Local Variables:
 coding: utf-8
-Info-documentlanguage: en
 End:
