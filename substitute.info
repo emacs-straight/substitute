@@ -43,11 +43,11 @@ options for the Emacs package called ‘substitute’ (or ‘substitute.el’),
 and provides every other piece of information pertinent to it.
 
    The documentation furnished herein corresponds to stable version
-0.5.0, released on 2026-01-05.  Any reference to a newer feature which
+0.6.0, released on 2026-07-24.  Any reference to a newer feature which
 does not yet form part of the latest tagged commit, is explicitly marked
 as such.
 
-   Current development target is 0.6.0-dev.
+   Current development target is 0.7.0-dev.
 
    • Package name (GNU ELPA): ‘substitute’
    • Official manual: <https://protesilaos.com/emacs/substitute>
@@ -248,7 +248,7 @@ the active region.  The differences in scope are as follows:
      boundaries of the current paragraph.
 
   1. ‘substitute-target-in-line’: Substitute the target only on the
-     current line.  [ Part of 0.6.0-dev.  ]
+     current line.
 
 
 File: substitute.info,  Node: User options for the substitution commands,  Prev: Substitutions by their scope of application,  Up: Overview
@@ -895,13 +895,13 @@ Node: Manual installation3966
 Node: Sample configuration4752
 Node: Overview5680
 Node: Substitutions by their scope of application6919
-Node: User options for the substitution commands9119
-Node: Acknowledgements12137
-Node: GNU Free Documentation License12595
-Node: Indices37738
-Node: Function index37915
-Node: Variable index40130
-Node: Concept index40930
+Node: User options for the substitution commands9094
+Node: Acknowledgements12112
+Node: GNU Free Documentation License12570
+Node: Indices37713
+Node: Function index37890
+Node: Variable index40105
+Node: Concept index40905
 
 End Tag Table
 

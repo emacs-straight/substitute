@@ -5,7 +5,7 @@
 ;; Author: Protesilaos <info@protesilaos.com>
 ;; Maintainer: Protesilaos <info@protesilaos.com>
 ;; URL: https://github.com/protesilaos/substitute
-;; Version: 0.5.0
+;; Version: 0.6.0
 ;; Package-Requires: ((emacs "27.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -131,6 +131,11 @@ and related."
     (widen)
     (remove-overlays nil nil 'face 'substitute-match)))
 
+(defvar-local substitute--last-matches nil
+  "Alist of the last matching substitution targets.
+Each entry is a list of the form (STRING BEG END), where STRING is the
+text to be replaced, while BEG and END are buffer positions.")
+
 (defun substitute--add-highlight (beg end)
   "Add overlay of `substitute-match' between BEG and END positions."
   (goto-char beg)
@@ -138,13 +143,19 @@ and related."
     (overlay-put highlight 'priority 100)
     (overlay-put highlight 'face 'substitute-match)))
 
+(defface substitute-prompt-target-highlight '((t :inherit error))
+  "Face to highlight the substitute target in the minibuffer prompt."
+  :package-version '(substitute . "0.6.0")
+  :group 'substitute)
+
 (defun substitute--prompt-without-highlight (target scope)
   "Prompt for string while referencing TARGET and SCOPE."
   (let ((pretty-target (substitute--prettify-target-description target)))
     (substitute--collect-targets target scope)
     (read-from-minibuffer
-     (format "Substitute `%s' %s with: "
-             (propertize pretty-target 'face 'error)
+     (format "Substitute `%s' (%s times) %s with: "
+             (propertize pretty-target 'face 'substitute-prompt-target-highlight)
+             (length substitute--last-matches)
              (substitute--scope-description scope))
      nil nil nil
      'substitute--history
@@ -207,9 +218,8 @@ Pass to it the TARGET and SCOPE arguments."
 (defun substitute--scope-current-defun-and-below (target)
   "Position point to match current TARGET and below only in this defun."
   (narrow-to-defun)
-  (if-let* ((_ (region-active-p))
-            (bounds (region-bounds)))
-      (goto-char (caar bounds))
+  (if (region-active-p)
+      (goto-char (region-end))
     (thing-at-point-looking-at target)
     (goto-char (match-beginning 0))))
 
@@ -310,11 +320,6 @@ text."
     ('paragraph (substitute--scope-current-paragraph))
     ('line (substitute--scope-current-line))
     (_ (substitute--scope-top-of-buffer))))
-
-(defvar-local substitute--last-matches nil
-  "Alist of the last matching substitution targets.
-Each entry is a list of the form (STRING BEG END), where STRING is the
-text to be replaced, while BEG and END are buffer positions.")
 
 (defun substitute--collect-targets (target scope)
   "Store occurrences of TARGET in SCOPE in `substitute--last-matches'."
