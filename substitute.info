@@ -216,19 +216,17 @@ the active region.  The differences in scope are as follows:
 
   1. ‘substitute-target-in-buffer’: Substitute the target across the
      entire buffer.
-
-  1. ‘substitute-target-in-defun’: Substitute the target only in the
+  2. ‘substitute-target-in-defun’: Substitute the target only in the
      current definition (per ‘narrow-to-defun’).
-
-  1. ‘substitute-target-below-point’: Substitute the target from point
+  3. ‘substitute-target-below-point’: Substitute the target from point
      to the end of the buffer (alias
      ‘substitute-target-to-end-of-buffer’).
 
-  1. ‘substitute-target-above-point’: Substitute the target from point
+  4. ‘substitute-target-above-point’: Substitute the target from point
      to the beginning of the buffer (alias
      ‘substitute-target-to-beginning-of-buffer’).
 
-  1. ‘substitute-target-in-outline’: Substitute the target within the
+  5. ‘substitute-target-in-outline’: Substitute the target within the
      boundaries of the current outline level.  In Org mode, for example,
      the current outline is the heading plus its paragraph text but not
      the subheadings and their text.  In programming modes the outline
@@ -236,18 +234,18 @@ the active region.  The differences in scope are as follows:
      stretch of text.  It depends on the buffer-local value of the
      variable ‘outline-regexp’.
 
-  1. ‘substitute-target-in-page’: Substitute the target within the
+  6. ‘substitute-target-in-page’: Substitute the target within the
      boundaries of the current page.  A page is demarcated by the
      buffer-local value of the variable ‘page-delimiter’.
 
-  1. ‘substitute-target-in-defun-and-below’: Substitute the target
+  7. ‘substitute-target-in-defun-and-below’: Substitute the target
      within the boundaries of the current definition only from point
      onwards.
 
-  1. ‘substitute-target-in-paragraph’: Substitute the target within the
+  8. ‘substitute-target-in-paragraph’: Substitute the target within the
      boundaries of the current paragraph.
 
-  1. ‘substitute-target-in-line’: Substitute the target only on the
+  9. ‘substitute-target-in-line’: Substitute the target only on the
      current line.
 
 
@@ -258,6 +256,17 @@ File: substitute.info,  Node: User options for the substitution commands,  Prev:
 
 These are applicable to all our commands (*note Substitutions by their
 scope of application::).
+
+   The user option ‘substitute-insert-target-into-minibuffer’ controls
+whether the target of a given substitution is added as the initial text
+of the minibuffer or not.  When the value is non-‘nil’, then the target
+becomes the initial text.  This makes it a bit faster to add a prefix or
+suffix to it.  Otherwise, if ‘nil’ then the target remains as the
+default minibuffer value, which can be inserted into the minibuffer with
+‘next-history-element’ (‘M-n’ by default) and then edited further.  It
+is standard for Emacs to have a default minibuffer value that is then
+accessed with ‘next-history-element’.  [ The user option
+‘substitute-insert-target-into-minibuffer’ is part of 0.7.0-dev.  ]
 
    By default, the substitution prompt informs the user about the target
 and highlights matches in the given scope (what the current command will
@@ -323,7 +332,7 @@ Contributions to code or the manual
      Ed Tavinor, Kostas Andreadis, Morgan Willcock, Wang Chunye.
 
 Ideas and/or user feedback
-     Tomasz Hołubowicz, ersi-dnd, revrari, zauberen.
+     Spike-Leung, Tomasz Hołubowicz, ersi-dnd, ezchi, revrari, zauberen.
 
 
 File: substitute.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
@@ -829,31 +838,31 @@ File: substitute.info,  Node: Function index,  Next: Variable index,  Up: Indice
 * Menu:
 
 * ~substitute-target-to-beginning-of-buffer: Substitutions by their scope of application.
-                                                               (line 22)
+                                                               (line 20)
 * substitute-prefix-map:                 User options for the substitution commands.
-                                                               (line 43)
+                                                               (line 54)
 * substitute-report-operation:           User options for the substitution commands.
-                                                               (line 33)
+                                                               (line 44)
 * substitute-target-above-point:         Substitutions by their scope of application.
-                                                               (line 22)
+                                                               (line 20)
 * substitute-target-below-point:         Substitutions by their scope of application.
-                                                               (line 18)
+                                                               (line 15)
 * substitute-target-in-buffer:           Substitutions by their scope of application.
                                                                (line 12)
 * substitute-target-in-defun:            Substitutions by their scope of application.
-                                                               (line 15)
+                                                               (line 13)
 * substitute-target-in-defun-and-below:  Substitutions by their scope of application.
-                                                               (line 38)
+                                                               (line 36)
 * substitute-target-in-line:             Substitutions by their scope of application.
-                                                               (line 45)
+                                                               (line 43)
 * substitute-target-in-outline:          Substitutions by their scope of application.
-                                                               (line 26)
+                                                               (line 24)
 * substitute-target-in-page:             Substitutions by their scope of application.
-                                                               (line 34)
+                                                               (line 32)
 * substitute-target-in-paragraph:        Substitutions by their scope of application.
-                                                               (line 42)
+                                                               (line 40)
 * substitute-target-to-end-of-buffer:    Substitutions by their scope of application.
-                                                               (line 18)
+                                                               (line 15)
 
 
 File: substitute.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
@@ -865,13 +874,15 @@ File: substitute.info,  Node: Variable index,  Next: Concept index,  Prev: Funct
 * Menu:
 
 * substitute-fixed-letter-case:          User options for the substitution commands.
-                                                               (line 14)
-* substitute-highlight:                  User options for the substitution commands.
-                                                               (line  9)
-* substitute-ignore-narrowing:           User options for the substitution commands.
                                                                (line 25)
+* substitute-highlight:                  User options for the substitution commands.
+                                                               (line 20)
+* substitute-ignore-narrowing:           User options for the substitution commands.
+                                                               (line 36)
+* substitute-insert-target-into-minibuffer: User options for the substitution commands.
+                                                               (line  9)
 * substitute-post-replace-functions:     User options for the substitution commands.
-                                                               (line 33)
+                                                               (line 44)
 
 
 File: substitute.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
@@ -895,13 +906,13 @@ Node: Manual installation3966
 Node: Sample configuration4752
 Node: Overview5680
 Node: Substitutions by their scope of application6919
-Node: User options for the substitution commands9094
-Node: Acknowledgements12112
-Node: GNU Free Documentation License12570
-Node: Indices37713
-Node: Function index37890
-Node: Variable index40105
-Node: Concept index40905
+Node: User options for the substitution commands9092
+Node: Acknowledgements12832
+Node: GNU Free Documentation License13310
+Node: Indices38453
+Node: Function index38630
+Node: Variable index40845
+Node: Concept index41806
 
 End Tag Table
 

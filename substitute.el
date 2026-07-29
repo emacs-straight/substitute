@@ -5,7 +5,7 @@
 ;; Author: Protesilaos <info@protesilaos.com>
 ;; Maintainer: Protesilaos <info@protesilaos.com>
 ;; URL: https://github.com/protesilaos/substitute
-;; Version: 0.6.0
+;; Version: 0.6.1
 ;; Package-Requires: ((emacs "27.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -38,6 +38,17 @@
 (defgroup substitute nil
   "Efficiently replace targets in the buffer or context."
   :group 'editing)
+
+(defcustom substitute-insert-target-into-minibuffer nil
+  "If non-nil, put the target as the initial text of the minibuffer.
+This means that it can be a bit faster to add a prefix or suffix to it.
+
+If nil, the target is the default minibuffer value, which can be added
+to the minibuffer for further edits with `next-history-element' (this is
+standard behaviour for every prompt that has a default value)."
+  :package-version '(substitute . "0.7.0")
+  :group 'substitute
+  :type 'boolean)
 
 (defcustom substitute-highlight t
   "If non-nil, highlight target during prompt for its substitute.
@@ -157,9 +168,10 @@ text to be replaced, while BEG and END are buffer positions.")
              (propertize pretty-target 'face 'substitute-prompt-target-highlight)
              (length substitute--last-matches)
              (substitute--scope-description scope))
-     nil nil nil
-     'substitute--history
-     pretty-target)))
+     (if substitute-insert-target-into-minibuffer
+         target
+       nil)
+     nil nil 'substitute--history pretty-target)))
 
 (defun substitute--prompt-with-highlight (target scope)
   "Prompt for string while referencing TARGET and SCOPE.
@@ -197,16 +209,18 @@ Pass to it the TARGET and SCOPE arguments."
 (defun substitute--scope-current-and-below (target)
   "Position point to match current TARGET and below."
   (substitute--widen)
-  (if (region-active-p)
-      (goto-char (region-end))
+  (if-let* ((_ (region-active-p))
+            (bounds (region-bounds)))
+      (goto-char (caar bounds))
     (thing-at-point-looking-at target)
     (goto-char (match-beginning 0))))
 
 (defun substitute--scope-current-and-above (target)
   "Position point to match current TARGET and above."
   (substitute--widen)
-  (if (region-active-p)
-      (goto-char (region-beginning))
+  (if-let* ((_ (region-active-p))
+            (bounds (region-bounds)))
+      (goto-char (cdar bounds))
     (thing-at-point-looking-at target)
     (goto-char (match-end 0))))
 
@@ -218,8 +232,9 @@ Pass to it the TARGET and SCOPE arguments."
 (defun substitute--scope-current-defun-and-below (target)
   "Position point to match current TARGET and below only in this defun."
   (narrow-to-defun)
-  (if (region-active-p)
-      (goto-char (region-end))
+  (if-let* ((_ (region-active-p))
+            (bounds (region-bounds)))
+      (goto-char (caar bounds))
     (thing-at-point-looking-at target)
     (goto-char (match-beginning 0))))
 
