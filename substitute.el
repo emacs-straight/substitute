@@ -159,47 +159,41 @@ text to be replaced, while BEG and END are buffer positions.")
   :package-version '(substitute . "0.6.0")
   :group 'substitute)
 
-(defun substitute--prompt-without-highlight (target scope)
-  "Prompt for string while referencing TARGET and SCOPE."
-  (let ((pretty-target (substitute--prettify-target-description target)))
-    (substitute--collect-targets target scope)
-    (read-from-minibuffer
-     (format "Substitute `%s' (%s times) %s with: "
-             (propertize pretty-target 'face 'substitute-prompt-target-highlight)
-             (length substitute--last-matches)
-             (substitute--scope-description scope))
-     (if substitute-insert-target-into-minibuffer
-         target
-       nil)
-     nil nil 'substitute--history pretty-target)))
-
-(defun substitute--prompt-with-highlight (target scope)
-  "Prompt for string while referencing TARGET and SCOPE.
-Highlight the TARGET's matching occurences per the user option
-`substitute-highlight'."
-  (let ((pretty-target (substitute--prettify-target-description target)))
-    (unwind-protect
-        (progn
-          (substitute--collect-targets target scope)
-          (substitute--highlight-targets)
-          (substitute--prompt-without-highlight pretty-target scope))
-      (substitute--remove-highlights)
-      (setq-local substitute--last-matches nil))))
-
-(defun substitute--highlight (target scope)
-  "Do what `substitute-highlight' entails for TARGET in SCOPE."
-  (funcall
-   (if substitute-highlight
-       'substitute--prompt-with-highlight
-     'substitute--prompt-without-highlight)
-   target
-   scope))
+(defun substitute--collect-targets (target scope)
+  "Store occurrences of TARGET in SCOPE in `substitute--last-matches'."
+  (let ((search-fn (if (eq scope 'above) 're-search-backward 're-search-forward)))
+    (setq-local substitute--last-matches nil)
+    (save-excursion
+      (save-restriction
+        (substitute--setup-scope target scope)
+        (while (funcall search-fn target nil t)
+          (push (list (regexp-quote (match-string-no-properties 0))
+                      (match-beginning 0)
+                      (match-end 0))
+                substitute--last-matches))))
+    substitute--last-matches))
 
 (defun substitute--prompt (target scope)
   "Return appropriate prompt based on `substitute-highlight'.
 Pass to it the TARGET and SCOPE arguments."
   (barf-if-buffer-read-only)
-  (substitute--highlight target scope))
+  (let ((pretty-target (substitute--prettify-target-description target)))
+    (unwind-protect
+        (progn
+          (substitute--collect-targets target scope)
+          (when substitute-highlight
+            (substitute--highlight-targets substitute--last-matches))
+          (read-from-minibuffer
+           (format "Substitute `%s' (%s times) %s with: "
+                   (propertize pretty-target 'face 'substitute-prompt-target-highlight)
+                   (length substitute--last-matches)
+                   (substitute--scope-description scope))
+           (if substitute-insert-target-into-minibuffer
+               target
+             nil)
+           nil nil 'substitute--history pretty-target))
+      (substitute--remove-highlights)
+      (setq-local substitute--last-matches nil))))
 
 (defun substitute--widen ()
   "Do `widen' if `substitute-ignore-narrowing' is non-nil."
@@ -336,23 +330,9 @@ text."
     ('line (substitute--scope-current-line))
     (_ (substitute--scope-top-of-buffer))))
 
-(defun substitute--collect-targets (target scope)
-  "Store occurrences of TARGET in SCOPE in `substitute--last-matches'."
-  (let ((search-fn (if (eq scope 'above) 're-search-backward 're-search-forward)))
-    (setq-local substitute--last-matches nil)
-    (save-excursion
-      (save-restriction
-        (substitute--setup-scope target scope)
-        (while (funcall search-fn target nil t)
-          (push (list (regexp-quote (match-string-no-properties 0))
-                      (match-beginning 0)
-                      (match-end 0))
-                substitute--last-matches))))
-    substitute--last-matches))
-
-(defun substitute--highlight-targets ()
-  "Highlight `substitute--last-matches'."
-  (when-let* ((targets substitute--last-matches))
+(defun substitute--highlight-targets (targets)
+  "Highlight TARGETS of form `substitute--last-matches'."
+  (when targets
     (save-excursion
       (save-restriction
         (mapcar
@@ -361,8 +341,8 @@ text."
              (substitute--add-highlight beg end)))
          targets)))))
 
-(defun substitute--replace-targets (sub &optional scope fixed)
-  "Replace `substitute--last-matches' target with SUB.
+(defun substitute--replace-targets (targets sub &optional scope fixed)
+  "Replace TARGETS of form `substitute--last-matches' with SUB.
 If optional SCOPE is equal to `above', then adjust for a reverse
 motion.
 
@@ -370,7 +350,7 @@ With optional FIXED as a non-nil value, do not alter the case of
 the substituted text.  Otherwise perform capitalization or
 upcasing based on the target text.  See the documenation of
 `replace-match' for how this works."
-  (when-let* ((targets substitute--last-matches))
+  (when targets
     (save-excursion
       (when (listp buffer-undo-list)
         (push (point) buffer-undo-list))
@@ -394,7 +374,7 @@ text (also see `substitute-fixed-letter-case')."
   (let* ((targets (or substitute--last-matches
                       (substitute--collect-targets target scope)))
          (count (length targets)))
-    (substitute--replace-targets sub scope fixed)
+    (substitute--replace-targets targets sub scope fixed)
     (setq-local substitute--last-matches nil)
     (run-hook-with-args 'substitute-post-replace-hook
                         target sub count
