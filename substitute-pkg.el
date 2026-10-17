@@ -1,2 +1,2 @@
 ;; Generated package description from substitute.el  -*- no-byte-compile: t; lexical-binding:t -*-
-(define-package "substitute" "0.6.1.0.20260825.3" "Efficiently replace targets in the buffer or context" '((emacs "27.1")) :commit "ef962007ed7bc8e5c84f3639b373785e784da5d9" :authors '(("Protesilaos" . "info@protesilaos.com")) :maintainer '("Protesilaos" . "info@protesilaos.com") :url "https://github.com/protesilaos/substitute")
+(define-package "substitute" "0.6.1.0.20261016.4" "Efficiently replace targets in the buffer or context" '((emacs "27.1")) :commit "ae6ff81e7448c32f0bedde8db5b4a3e03b6d4226" :authors '(("Protesilaos" . "info@protesilaos.com")) :maintainer '("Protesilaos" . "info@protesilaos.com") :url "https://github.com/protesilaos/substitute")
